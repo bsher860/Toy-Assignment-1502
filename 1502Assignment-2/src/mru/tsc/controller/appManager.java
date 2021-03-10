@@ -314,30 +314,93 @@ public class appManager {
 
 	public void removeToy() throws IOException {
 
-		Scanner kb = new Scanner(System.in);
+		Scanner s = new Scanner(System.in);
 		System.out.print("Enter SIN: ");
-		String sic = kb.next();
+		String sid = s.next();
+		String line = "";
 
-		File inputFile = new File("res/toyfile");
-		File tempFile = new File("res/myFile.txt");
+		while (sid == null) {
+			System.out.println("invalid input, try again");
+			System.out.print("Enter SIN: ");
+			sid = s.next();
 
-		BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-		BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
-
-		String lineToRemove = sic;
-		String currentLine;
-
-		while ((currentLine = reader.readLine()) != null) {
-			// trim newline when comparing with lineToRemove
-			String trimmedLine = currentLine.trim();
-			if (trimmedLine.equals(lineToRemove))
-				continue;
-			writer.write(currentLine + System.getProperty("line.seperator"));
 		}
-		writer.close();
-		reader.close();
-		boolean successful = tempFile.renameTo(inputFile);
 
+		try {
+			FileInputStream fin = new FileInputStream("res/toyfile");
+			Scanner sc = new Scanner(fin);
+			while (sc.hasNextLine()) {
+				line = sc.nextLine();
+				if (line.startsWith(sid))
+					System.out.println(line + "\n");
+			}
+
+			sc.close();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+
+		}
+
+		Scanner y = new Scanner(System.in);
+		char answer = 'Y';
+		String response;
+		String x = "";
+
+		System.out.println("Do you want to delete the following iteam? Y/N");
+		response = y.nextLine();
+
+		answer = response.charAt(0);
+
+		if (Character.toUpperCase(answer) == 'Y') {
+
+			Scanner kb = new Scanner(System.in);
+			System.out.print("Enter SIN: ");
+			String sic = kb.next();
+
+			File inputFile = new File("res/toyfile");
+			File tempFile = new File("res/myFile.txt");
+
+			BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+			String lineToRemove = sic;
+			String currentLine;
+
+			while ((currentLine = reader.readLine()) != null) {
+				// trim newline when comparing with lineToRemove
+				String trimmedLine = currentLine.trim();
+				if (trimmedLine.equals(lineToRemove))
+					continue;
+				writer.write(currentLine + System.getProperty("line.seperator"));
+
+			}
+			writer.close();
+			reader.close();
+			boolean successful = tempFile.renameTo(inputFile);
+			System.out.println("\\deleting......... finished");
+			System.out.println("");
+
+			System.out.println("Press enter to continue");
+
+			response = y.nextLine();
+			if (x == "") {
+
+				search();
+
+			}
+
+		} else {
+			System.out.println("\\\\canceling deletion......... finished");
+			System.out.println("");
+			System.out.println("Press enter to continue");
+
+			response = y.nextLine();
+			if (x == "") {
+
+				search();
+
+			}
+		}
 	}
 
 	private void save() {
