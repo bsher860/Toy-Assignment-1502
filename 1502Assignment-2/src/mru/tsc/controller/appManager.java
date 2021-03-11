@@ -30,13 +30,12 @@ public class appManager {
 
 		boolean flag = true;
 		char option;
-		option = appMen.showMainMenu();
+	
 
-		while (flag) {
+		while (flag) { option = appMen.showMainMenu();
 
 			switch (option) {
 			case 'a':
-
 				search();
 				break;
 
@@ -222,13 +221,13 @@ public class appManager {
 
 		Scanner s = new Scanner(System.in);
 		System.out.print("Enter SIN: ");
-		String sid = s.next();
+		String sid = s.nextLine();
 		String line = "";
 
 		while (sid == null) {
 			System.out.println("invalid input, try again");
 			System.out.print("Enter SIN: ");
-			sid = s.next();
+			sid = s.nextLine();
 
 		}
 
@@ -276,53 +275,81 @@ public class appManager {
 
 	}
 
-	private void addToy() {
+	public addToy addToy() {
 		Scanner kb = new Scanner(System.in);
-		String addingToData = null;
-		System.out.println("What would you like to add?");
-		System.out.println("(1) Animal");
-		System.out.println("(2) Figures");
-		System.out.println("(3) Puzzles");
-		System.out.println("(4) Board Games");
-		int number = kb.nextInt();
-		switch (number) {
-		case 1:
-			addingToData = animal();
-			break;
-		case 2:
-			addingToData = figure();
-			break;
-		case 3:
-			addingToData = puzzle();
-			break;
-		case 4:
-			addingToData = boardGame();
-			break;
-		}
-		// Use and Printer package to print the value into the file.
-		try {
-			FileWriter myWriter = new FileWriter("toyfile.txt");
-			myWriter.write(addingToData);
-			myWriter.close();
-			System.out.println("Successfully wrote to the file.");
-		} catch (IOException e) {
-			System.out.println("An error occurred.");
-			e.printStackTrace();
-		}
+		String op1 = "";
+		String op2 = "";
 
+		System.out.println("Enter the Serial Number:");
+		String SN = (kb.nextLine());
+
+		System.out.println("Enter the Toy Name:");
+		String name = kb.nextLine().toLowerCase();
+
+		System.out.println("Enter the Toy Brand:");
+		String brand = kb.nextLine().toLowerCase();
+
+		System.out.println("Enter the Available Price:");
+		Double price = Double.parseDouble(kb.nextLine());
+
+		System.out.println("Enter the Available Count:");
+		int count = Integer.parseInt(kb.nextLine());
+
+		System.out.println("Enter the Appropriate Age:");
+		int age = Integer.parseInt(kb.nextLine());
+
+		
+		if (groupSn(SN) == 0 || groupSn(SN) == 1) {
+			System.out.println("Enter the Classification:");
+			op1 = (kb.nextLine());
+		
+			
+		} else if (groupSn(SN) == 2 || groupSn(SN) == 3) {
+			System.out.println("Enter the Material:");
+			op1 = (kb.nextLine());
+			System.out.println("Enter the Size:");
+			op2 = (kb.nextLine());
+			
+			
+		} else if (groupSn(SN) == 4 || groupSn(SN) == 5 || groupSn(SN) == 6) {
+			System.out.println("Enter the Puzzle Type:");
+			op1 = (kb.nextLine());
+			
+			
+		} else if (groupSn(SN) == 4 || groupSn(SN) == 5 || groupSn(SN) == 6) {
+			System.out.println("Enter Type of Puzzle:");
+			op1 = (kb.nextLine());
+			
+			
+		} else if (groupSn(SN) == 7 || groupSn(SN) == 8 || groupSn(SN) == 9) {
+			System.out.println("Enter Number of Players:");
+			op1 = (kb.nextLine());
+			System.out.println("Enter Designer(s) name:");
+			op2 = (kb.nextLine());
+			
+		}
+		addToy add = new addToy(SN, name, brand, price, count, age, op1, op2);
+
+		return add;
+	}
+
+	public int groupSn(String SN) {
+		String str = (SN).substring(0, 1);
+		int num = Integer.parseInt(str);
+		return num;
 	}
 
 	public void removeToy() throws IOException {
 
 		Scanner s = new Scanner(System.in);
 		System.out.print("Enter SIN: ");
-		String sid = s.next();
+		String sid = s.nextLine();
 		String line = "";
 
 		while (sid == null) {
 			System.out.println("invalid input, try again");
 			System.out.print("Enter SIN: ");
-			sid = s.next();
+			sid = s.nextLine();
 
 		}
 
@@ -355,7 +382,7 @@ public class appManager {
 
 			Scanner kb = new Scanner(System.in);
 			System.out.print("Enter SIN: ");
-			String sic = kb.next();
+			String sic = kb.nextLine();
 
 			File inputFile = new File("res/toyfile");
 			File tempFile = new File("res/myFile.txt");
@@ -402,133 +429,9 @@ public class appManager {
 			}
 		}
 	}
-
+	
 	private void save() {
 
-	}
-
-	private String animal() {
-		Scanner kb = new Scanner(System.in);
-		System.out.println("Please put enter the SN number for the item.");
-		String SN_number = kb.next();
-		boolean checkIfSame = true;
-		while (checkIfSame) {
-			checkIfSame = searchForSN(SN_number);
-			System.out.println("Enter again");
-			SN_number = kb.next();
-		}
-		System.out.println("Please put enter the SN for the item.");
-		String sn = kb.next();
-		System.out.println("Please put enter the name for the item.");
-		String name = kb.next();
-		System.out.println("Please put enter the brand for the item.");
-		String brand = kb.next();
-		System.out.println("Please put enter the price for the item.");
-		String price = kb.next();
-		System.out.println("Please put enter the available-count for the item.");
-		String available_count = kb.next();
-		System.out.println("Please put enter the age-appropriate for the item.");
-		String age = kb.next();
-		System.out.println("Please put enter the material for the item.");
-		String material = kb.next();
-		System.out.println("Please put enter the size for the item.");
-		String size = kb.next();
-
-		String animal_info = sn + ", " + name + ", " + brand + ", " + price + ", " + available_count + "," + age + ", "
-				+ material + ", " + size;
-		return animal_info;
-
-	}
-
-	private String figure() {
-		Scanner kb = new Scanner(System.in);
-		System.out.println("Please put enter the SN number for the item.");
-		String SN_number = kb.next();
-		boolean checkIfSame = true;
-		while (checkIfSame) {
-			checkIfSame = searchForSN(SN_number);
-			System.out.println("Enter again");
-			SN_number = kb.next();
-		}
-		System.out.println("Please put enter the SN for the item.");
-		String sn = kb.next();
-		System.out.println("Please put enter the name for the item.");
-		String name = kb.next();
-		System.out.println("Please put enter the brand for the item.");
-		String brand = kb.next();
-		System.out.println("Please put enter the price for the item.");
-		String price = kb.next();
-		System.out.println("Please put enter the available-count for the item.");
-		String available_count = kb.next();
-		System.out.println("Please put enter the age-appropriate for the item.");
-		String age = kb.next();
-		String material = kb.next();
-		System.out.println("Please put enter the size for the item.");
-		String size = kb.next();
-
-		String figure_info = sn + ", " + name + ", " + brand + ", " + price + ", " + available_count + "," + age + ", "
-				+ material + ", " + size;
-		return figure_info;
-
-	}
-
-	private String puzzle() {
-		Scanner kb = new Scanner(System.in);
-		System.out.println("Please put enter the SN number for the item.");
-		String SN_number = kb.next();
-		boolean checkIfSame = true;
-		while (checkIfSame) {
-			checkIfSame = searchForSN(SN_number);
-			System.out.println("Enter again");
-			SN_number = kb.next();
-		}
-		System.out.println("Please put enter the SN for the item.");
-		String sn = kb.next();
-		System.out.println("Please put enter the name for the item.");
-		String name = kb.next();
-		System.out.println("Please put enter the brand for the item.");
-		String brand = kb.next();
-		System.out.println("Please put enter the price for the item.");
-		String price = kb.next();
-		System.out.println("Please put enter the available-count for the item.");
-		String available_count = kb.next();
-		System.out.println("Please put enter the age-appropriate for the item.");
-		String age = kb.next();
-		System.out.println("Please put enter the puzzle-type for the item.");
-		String puzzletype = kb.next();
-		String puzzle_info = sn + ", " + name + ", " + brand + ", " + price + ", " + available_count + "," + puzzletype
-				+ "," + age;
-		return puzzle_info;
-
-	}
-
-	private String boardGame() {
-		Scanner kb = new Scanner(System.in);
-		System.out.println("Please put enter the SN number for the item.");
-		String SN_number = kb.next();
-		boolean checkIfSame = true;
-		while (checkIfSame) {
-			checkIfSame = searchForSN(SN_number);
-			System.out.println("Enter again");
-			SN_number = kb.next();
-		}
-		System.out.println("Please put enter the name for the item.");
-		String name = kb.next();
-		System.out.println("Please put enter the brand for the item.");
-		String brand = kb.next();
-		System.out.println("Please put enter the price for the item.");
-		String price = kb.next();
-		System.out.println("Please put enter the available-count for the item.");
-		String available_count = kb.next();
-		System.out.println("Please put enter the age-appropriate for the item.");
-		String age = kb.next();
-		System.out.println("Please put enter the Number of Players for the item.");
-		String numOfplyrs = kb.next();
-		System.out.println("Please put enter the designer(s) for the item.");
-		String designr = kb.next();
-		String boardGame_info = name + ", " + brand + ", " + price + ", " + available_count + "," + age + ", "
-				+ numOfplyrs + "-" + "," + designr;
-		return boardGame_info;
 	}
 
 	// This method will return true if the Sn value is unique
