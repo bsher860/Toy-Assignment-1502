@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import mru.tsc.view.AppMenu;
@@ -343,13 +344,13 @@ public class appManager {
 
 		Scanner s = new Scanner(System.in);
 		System.out.print("Enter SIN: ");
-		String sid = s.nextLine();
+		String sid = s.next();
 		String line = "";
 
 		while (sid == null) {
 			System.out.println("invalid input, try again");
 			System.out.print("Enter SIN: ");
-			sid = s.nextLine();
+			sid = s.next();
 
 		}
 
@@ -380,32 +381,24 @@ public class appManager {
 
 		if (Character.toUpperCase(answer) == 'Y') {
 
-			Scanner kb = new Scanner(System.in);
-			System.out.print("Enter SIN: ");
-			String sic = kb.nextLine();
+			BufferedReader bufReader;
 
-			File inputFile = new File("res/toyfile");
-			File tempFile = new File("res/myFile.txt");
+			bufReader = new BufferedReader(new FileReader("res/toyfile"));
 
-			BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-			BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+			ArrayList<String> listOfLines = new ArrayList<>();
+			String l = bufReader.readLine();
 
-			String lineToRemove = sic;
-			String currentLine;
+			while (l != null) {
 
-			while ((currentLine = reader.readLine()) != null) {
-				// trim newline when comparing with lineToRemove
-				String trimmedLine = currentLine.trim();
-				if (trimmedLine.equals(lineToRemove))
-					continue;
-				writer.write(currentLine + System.getProperty("line.seperator"));
+				listOfLines.add(l);
+
+				line = bufReader.readLine();
 
 			}
-			writer.close();
-			reader.close();
-			boolean successful = tempFile.renameTo(inputFile);
+
+			listOfLines.remove(sid);
+
 			System.out.println("\\deleting......... finished");
-			System.out.println("");
 
 			System.out.println("Press enter to continue");
 
@@ -413,6 +406,8 @@ public class appManager {
 			if (x == "") {
 
 				search();
+
+				bufReader.close();
 
 			}
 
