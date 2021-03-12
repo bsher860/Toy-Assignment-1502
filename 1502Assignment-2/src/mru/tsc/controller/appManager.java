@@ -26,13 +26,18 @@ public class appManager {
 		appManager newThing = new appManager();
 		newThing.addToy();
 	}
-
+	/**
+	 * This method will launch the whole app
+	 * 
+	 * @throws IOException
+	 */
+	
 	public void launchApplication() throws IOException {
 
 		boolean flag = true;
 		char option;
 	
-
+		// the while loops will help with validation
 		while (flag) { option = appMen.showMainMenu();
 
 			switch (option) {
@@ -64,11 +69,17 @@ public class appManager {
 
 	}
 
+	/**
+	 * This method will prompt the sub menu and allow user to inout their choices
+	 * 
+	 * @throws IOException
+	 */
 	public void search() throws IOException {
 
 		boolean flag = true;
 		char option;
 
+		// the while loops will help with validation
 		while (flag) {
 
 			option = appMen.showSearchMenu();
@@ -100,6 +111,11 @@ public class appManager {
 
 	}
 
+	/**
+	 * This method will search for the type of toy in the text file
+	 * 
+	 * @throws IOException
+	 */
 	public void searchType() throws IOException {
 		File input = new File("res/toyfile");
 		FileReader fr = null;
@@ -107,14 +123,14 @@ public class appManager {
 		String ToyName, str;
 		System.out.print("Enter name of toy: ");
 		ToyName = ob.nextLine();
-
+		// below will validate user input and if the user enters a wrong character it
 		while (ToyName == null) {
 
 			System.out.println("invalid input, try again");
 			ToyName = ob.nextLine();
 
 		}
-
+		//this will search for the string specifically related to the user's input
 		try {
 
 			fr = new FileReader(input);
@@ -133,6 +149,7 @@ public class appManager {
 
 		Scanner y = new Scanner(System.in);
 		char answer = 'Y';
+		// this will confirm if the user wants to purchase the listed items
 		String response;
 		String line = "";
 
@@ -140,7 +157,7 @@ public class appManager {
 		response = y.nextLine();
 
 		answer = response.charAt(0);
-
+		//the below if statement will validate user input and also change any lowercase letter letter into uppercase
 		if (Character.toUpperCase(answer) == 'Y') {
 			System.out.println("Purchase succeesful");
 			System.out.println("");
@@ -159,7 +176,11 @@ public class appManager {
 		}
 
 	}
-
+	/**
+	 * this method will search for the name of the toy
+	 * 
+	 * @throws IOException
+	 */
 	public void searchName() throws IOException {
 		File input = new File("res/toyfile");
 		FileReader fr = null;
@@ -194,11 +215,11 @@ public class appManager {
 		String response;
 		String line = "";
 
-		System.out.println("Do you want to purchase iteams? Y/N");
+		System.out.println("Do you want to purchase items? Y/N");
 		response = y.nextLine();
 
 		answer = response.charAt(0);
-
+		//the below if statement will validate user input and also change any lowercase letter letter into uppercase
 		if (Character.toUpperCase(answer) == 'Y') {
 			System.out.println("Purchase succeesful");
 			System.out.println("");
@@ -217,14 +238,19 @@ public class appManager {
 		}
 
 	}
-
+	/**
+	 * This method will search the sin number of the toy and list that specific toy
+	 * only
+	 * 
+	 * @throws IOException
+	 */
 	public void searchSin() throws IOException {
 
 		Scanner s = new Scanner(System.in);
 		System.out.print("Enter SIN: ");
 		String sid = s.nextLine();
 		String line = "";
-
+		//this will validate user input and make the user is only entering digits as well
 		while (sid == null) {
 			System.out.println("invalid input, try again");
 			System.out.print("Enter SIN: ");
@@ -252,13 +278,13 @@ public class appManager {
 		String response;
 		String x = "";
 
-		System.out.println("Do you want to purchase iteams? Y/N");
+		System.out.println("Do you want to purchase items? Y/N");
 		response = y.nextLine();
 
 		answer = response.charAt(0);
 
 		if (Character.toUpperCase(answer) == 'Y') {
-			System.out.println("Purchase succeesful");
+			System.out.println("Purchase successful");
 			System.out.println("");
 
 			System.out.println("Press enter to continue");
@@ -275,7 +301,10 @@ public class appManager {
 		}
 
 	}
-
+/**
+ * This method will add a toy according to user inputs.
+ * @return add
+ */
 	public addToy addToy() {
 		Scanner kb = new Scanner(System.in);
 		String op1 = "";
@@ -340,6 +369,10 @@ public class appManager {
 		return num;
 	}
 
+	/**this method will remove toy that the user inputs 
+	 * 
+	 * @throws IOException
+	 */
 	public void removeToy() throws IOException {
 
 		Scanner s = new Scanner(System.in);
@@ -388,15 +421,16 @@ public class appManager {
 			ArrayList<String> listOfLines = new ArrayList<>();
 			String l = bufReader.readLine();
 
-			while (l != null) {
+			while (line != null) {
 
-				listOfLines.add(l);
+				listOfLines.add(line);
 
 				line = bufReader.readLine();
 
 			}
 
-			listOfLines.remove(sid);
+			bufReader.close();
+			listOfLines.remove(0);
 
 			System.out.println("\\deleting......... finished");
 
@@ -407,7 +441,7 @@ public class appManager {
 
 				search();
 
-				bufReader.close();
+				
 
 			}
 
