@@ -30,7 +30,7 @@ public class AppMenu {
 			System.out.println();
 			System.out.println("How we may help you?");
 			System.out.println();
-			System.out.println("(A) Search inventory and purchse toy");
+			System.out.println("(A) Search inventory and purchase toy");
 			System.out.println("(B) Add new toy");
 			System.out.println("(C) Remove toy");
 			System.out.println("(D) Save and Exit");

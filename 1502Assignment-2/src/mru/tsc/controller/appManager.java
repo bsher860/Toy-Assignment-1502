@@ -153,7 +153,7 @@ public class appManager {
 		String response;
 		String line = "";
 
-		System.out.println("Do you want to purchase iteams? Y/N");
+		System.out.println("Do you want to purchase items? Y/N");
 		response = y.nextLine();
 
 		answer = response.charAt(0);
